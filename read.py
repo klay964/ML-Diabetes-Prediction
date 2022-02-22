@@ -14,10 +14,11 @@ data.describe()
 
 #Convert text values to numerical values
 data['Gender']=np.where(data['Gender']=='F',0,1)
-print(data.Gender)
+data['CLASS']=np.where(data['CLASS']=='Y',0,1)
 
 
-x=data.iloc[:,0:13] #Split the data  inputs(features (x))
+
+x=data.iloc[:,2:13] #Split the data  inputs(features (x))
 print('feauter are : ','\n' ,x)
 
 y=data.iloc[:,13:]#split the data output(target(y))

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to Diabetes Prediction</title>
+    <style>
+        body {
+
+            background-repeat: no-repeat;
+            background-size: 100% 206%;
+        }
+
+        #btn {
+            height: 30px;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            display: block;
+            font-size: 18px;
+        }
+
+        #btn:hover {
+            background-color: deepskyblue;
+        }
+
+        hr {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+        <h1>Welcome to Diabetes Prediction Portal</h1>
+    </center><br>
+    <form action="/predict" method="post">
+        <label>ID</label><input type="number" name="ID" required>
+        <label>No_Pation</label><input type="number" name="No_Pation" required>
+        <label>Gender</label><input type="number" name="Gender" required>
+        <label>Age</label><input type="number" name="Age" required>
+        <label>Cr</label><input type="number" name="Cr" required>
+        <label>HbA1c</label><input type="number" name="HbA1c" required>
+        <label>Chol</label><input type="number" name="Chol" required>
+        <label>TG</label><input type="number" name="TG" required>
+        <label>HDL</label><input type="number" name="HDL" required>
+        <label>LDL</label><input type="number" name="LDL" required>
+        <label>VLDL</label><input type="number" name="VLDL" required>
+        <label>BMI</label><input type="number" name="BMI" required>
+
+
+        <br><br>
+        <center><input type="submit" value="Submit" id="btn"></center>
+    </form><br>
+
+    {% if msg=="Success" %}
+    <hr />
+    <center>
+        <h1>Your Result:</h1><strong><i>Positive!! You have diabetes</i></strong>
+    </center>
+    {% endif %}
+    {% if msg=="Unsuccess" %}
+    <hr />
+    <center>
+        <h2>Your Result:</h2><strong><i>Negative!! You do not have diabetes<br>Probability that you will have diabetes
+                in future:{{ prob }}&percnt;</i></strong>
+    </center><br>
+
+    {% endif %}
+</body>
+
+</html>
