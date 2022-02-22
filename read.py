@@ -1,10 +1,8 @@
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 from sklearn.tree import DecisionTreeClassifier
 from sklearn import metrics,model_selection,preprocessing
-from sklearn import linear_model
-from sklearn.metrics import plot_confusion_matrix
+import joblib
 
 
 data=pd.read_csv('diabets.csv')
@@ -72,3 +70,9 @@ print('classifiers', classifiers)
 scores_df = pd.DataFrame(scores)
 print(scores_df)
 
+
+#import joblib
+#save model as diabetes.pkl
+joblib.dump(DS,'diabetes.pkl') 
+#loading the model
+model1 = joblib.load('diabetes.pkl')
