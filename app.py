@@ -1,38 +1,54 @@
-from flask import *
-import joblib
-import json
-import os
+from flask import Flask, request, render_template
 import pandas as pd
-from pandas.io.json import json_normalize
-import numpy as np
+import joblib
 
+
+
+# Declare a Flask app
 app = Flask(__name__)
 
-@app.route('/')
-def hello_world():
-    return render_template("index.html")
+# Main function here
 
-@app.route('/predict',methods=["post"])
-def predict():
-    formvalues = request.form
-    path1 = "/static/json/"
-    with open(os.path.join(os.getcwd()+"/"+path1,'file.json'), 'w') as f:
-        json.dump(formvalues, f)
-    with open(os.path.join(os.getcwd()+"/"+path1,'file.json'), 'r') as f:
-        values = json.load(f)
-    df = pd.DataFrame(json_normalize(values))
-    model_path=os.getcwd()+"/static/model/diabetes.pkl"
-    model = joblib.load(model_path)
-    result = model.predict(df)
-    a=np.array(1)
-    if result.astype('int')==a.astype('int'):
-        msg="Success"
+@app.route('/', methods=['GET', 'POST'])
+def main():
+    
+    # If a form is submitted
+    if request.method == "POST":
+        
+        # Unpickle classifier
+        clf = joblib.load("diabetes.pkl")
+        
+        # Get values through input bars
+        Gender = request.form.get("Gender")
+        AGE = request.form.get("AGE")
+        Urea = request.form.get("Urea")
+
+        Cr = request.form.get("Cr")
+
+        HbA1c = request.form.get("HbA1c")
+
+        Chol = request.form.get("Chol")
+        HDL = request.form.get("HDL")
+
+        LDL = request.form.get("LDL")
+
+        VLDL = request.form.get("VLDL")
+        BMI = request.form.get("BMI")
+
+
+
+        
+        
+        # Put inputs to dataframe
+        X = pd.DataFrame([[Gender, AGE,Urea,Cr,HbA1c,Chol,HDL,LDL,VLDL,BMI]], columns = ["Gender", "AGE","Urea","Cr","HbA1c","Chol","HDL","LDL","VLDL","BMI"])
+        X.fillna()
+        # Get prediction
+        prediction = clf.predict(X)[0]
+        
     else:
-        msg = "Unsuccess"
-    positive_percent= model.predict_proba(df)[0][1]*100
-    return render_template("index.html",msg=msg,prob=positive_percent,**request.args)
-
-
-
+        prediction = ""
+        
+    return render_template("index.html", output = prediction)
+# Running the app
 if __name__ == '__main__':
-    app.run()
+    app.run(debug = True)

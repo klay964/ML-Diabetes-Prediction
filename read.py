@@ -6,6 +6,8 @@ import joblib
 
 
 data=pd.read_csv('diabets.csv')
+data.drop(['ID','No_Pation'],axis=1,inplace=True)
+
 data.head()
 #describe a DataFream and info
 data.info()
@@ -16,15 +18,21 @@ data.describe()
 data['Gender']=np.where(data['Gender']=='F',0,1)
 data['CLASS']=np.where(data['CLASS']=='Y',0,1)
 
+print(data.isnull().sum())
+print('Feature name | Total missing values')
+print(data.isna().sum())
 
 
-x=data.iloc[:,2:13] #Split the data  inputs(features (x))
-print('feauter are : ','\n' ,x)
 
-y=data.iloc[:,13:]#split the data output(target(y))
+X=data.iloc[:,:10] #Split the data  inputs(features (x))
+print('feauter are : ','\n' ,X)
+
+y=data['CLASS']#split the data output(target(y))
 print('target is:','\n' ,y)
 
 print(data)
+
+
 
 #defining estimators function with a array to save the models after learning for bars chart ploting 
 def print_estimator_name(estimator):
@@ -37,7 +45,7 @@ acc=[] #saving accuracy scores for bars chart ploting
 f1=[] #saveing f1 score for bars chart ploting
 
 x_normalizer=preprocessing.StandardScaler()
-x_norm=x_normalizer.fit_transform(x)
+x_norm=x_normalizer.fit_transform(X)
 
 x_train,x_test,y_train,y_test=model_selection.train_test_split(x_norm,y,test_size=0.33,random_state=42)
 print('x_train :',x_train.shape), print('y_train: ',y_train.shape)
