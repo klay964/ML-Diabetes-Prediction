@@ -40,8 +40,9 @@
         <label>No_Pation</label><input type="number" name="No_Pation" required>
         <label>CLASS</label><input type="number" name="CLASS" required> -->
 
-        <label>Gender</label><input type="number" name="Gender" required>
-        <label>Age</label><input type="number" name="Age" required>
+        <!-- <label>Gender</label><input type="number" name="Gender" required> -->
+        <label>Age</label><input type="number" name="AGE" required>
+        <label>Urea</label><input type="number" name="Urea" required>
         <label>Cr</label><input type="number" name="Cr" required>
         <label>HbA1c</label><input type="number" name="HbA1c" required>
         <label>Chol</label><input type="number" name="Chol" required>
@@ -55,21 +56,9 @@
         <br><br>
         <center><input type="submit" value="Submit" id="btn"></center>
     </form><br>
-
-    {% if msg=="Success" %}
-    <hr />
-    <center>
-        <h1>Your Result:</h1><strong><i>Positive!! You have diabetes</i></strong>
-    </center>
-    {% endif %}
-    {% if msg=="Unsuccess" %}
-    <hr />
-    <center>
-        <h2>Your Result:</h2><strong><i>Negative!! You do not have diabetes<br>Probability that you will have diabetes
-                in future:{{ prob }}&percnt;</i></strong>
-    </center><br>
-
-    {% endif %}
+    <div>
+        {{output}}
+    </div>
 </body>
 
 </html>

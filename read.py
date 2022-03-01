@@ -6,21 +6,34 @@ import joblib
 
 
 data=pd.read_csv('diabets.csv')
-data.drop(['ID','No_Pation'],axis=1,inplace=True)
+data.drop(['ID','No_Pation','Gender'],axis=1,inplace=True)
+
+
+#Convert text values to numerical values
+def convert_text_to_num(x):
+  set_x=set(x)
+  index_w={}
+  w_index={}
+  for i,w in enumerate(set_x):
+    index_w[i]=w
+    w_index[w]=i
+  x=x.replace(w_index)
+  return x,w_index,index_w 
+
+
+
+data.CLASS,CLASS_1_w_index,CLASS_1_w_index=convert_text_to_num(data.CLASS)
+data = data.astype('int64')
+
 
 data.head()
 #describe a DataFream and info
 data.info()
 data.describe()
 
-
-#Convert text values to numerical values
-data['Gender']=np.where(data['Gender']=='F',0,1)
-data['CLASS']=np.where(data['CLASS']=='Y',0,1)
-
-print(data.isnull().sum())
-print('Feature name | Total missing values')
-print(data.isna().sum())
+# print(data.isnull().sum())
+# print('Feature name | Total missing values')
+# print(data.isna().sum())
 
 
 
@@ -30,7 +43,7 @@ print('feauter are : ','\n' ,X)
 y=data['CLASS']#split the data output(target(y))
 print('target is:','\n' ,y)
 
-print(data)
+print(y)
 
 
 
@@ -82,6 +95,6 @@ print(scores_df)
 
 #import joblib
 #save model as diabetes.pkl
-joblib.dump(DS,'diabetes.pkl') 
+joblib.dump(DS,'ds.pkl') 
 #loading the model
-model1 = joblib.load('diabetes.pkl')
+model1 = joblib.load('ds.pkl')

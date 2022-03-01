@@ -1,3 +1,4 @@
+import re
 from flask import Flask, request, render_template
 import pandas as pd
 import joblib
@@ -16,10 +17,9 @@ def main():
     if request.method == "POST":
         
         # Unpickle classifier
-        clf = joblib.load("diabetes.pkl")
+        clf = joblib.load("ds.pkl")
         
         # Get values through input bars
-        Gender = request.form.get("Gender")
         AGE = request.form.get("AGE")
         Urea = request.form.get("Urea")
 
@@ -29,26 +29,22 @@ def main():
 
         Chol = request.form.get("Chol")
         HDL = request.form.get("HDL")
-
+        TG=request.form.get("TG")
         LDL = request.form.get("LDL")
 
         VLDL = request.form.get("VLDL")
         BMI = request.form.get("BMI")
-
-
-
-        
         
         # Put inputs to dataframe
-        X = pd.DataFrame([[Gender, AGE,Urea,Cr,HbA1c,Chol,HDL,LDL,VLDL,BMI]], columns = ["Gender", "AGE","Urea","Cr","HbA1c","Chol","HDL","LDL","VLDL","BMI"])
-        X.fillna()
+        X = pd.DataFrame([[ AGE,Urea,Cr,TG,HbA1c,Chol,HDL,LDL,VLDL,BMI]], columns = [ "AGE","Urea","Cr","TG","HbA1c","Chol","HDL","LDL","VLDL","BMI"])
+
         # Get prediction
         prediction = clf.predict(X)[0]
         
     else:
         prediction = ""
         
-    return render_template("index.html", output = prediction)
+    return render_template("index.html", output =prediction)
 # Running the app
 if __name__ == '__main__':
     app.run(debug = True)
