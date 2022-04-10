@@ -6,7 +6,7 @@ import joblib
 
 
 data=pd.read_csv('diabets.csv')
-data.drop(['ID','No_Pation','Gender'],axis=1,inplace=True)
+data.drop(['ID','No_Pation'],axis=1,inplace=True)
 
 
 #Convert text values to numerical values
@@ -23,6 +23,7 @@ def convert_text_to_num(x):
 
 
 data.CLASS,CLASS_1_w_index,CLASS_1_w_index=convert_text_to_num(data.CLASS)
+data.Gender,Gender_1_w_index,Gender_1_w_index=convert_text_to_num(data.Gender)
 data = data.astype('int64')
 
 
@@ -31,13 +32,8 @@ data.head()
 data.info()
 data.describe()
 
-# print(data.isnull().sum())
-# print('Feature name | Total missing values')
-# print(data.isna().sum())
 
-
-
-X=data.iloc[:,:10] #Split the data  inputs(features (x))
+X=data.iloc[:,:11] #Split the data  inputs(features (x))
 print('feauter are : ','\n' ,X)
 
 y=data['CLASS']#split the data output(target(y))
@@ -45,7 +41,7 @@ print('target is:','\n' ,y)
 
 print(y)
 
-
+data=data.reset_index()
 
 #defining estimators function with a array to save the models after learning for bars chart ploting 
 def print_estimator_name(estimator):

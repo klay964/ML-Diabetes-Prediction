@@ -12,16 +12,17 @@ app = Flask(__name__)
 def hello_world():
     return render_template("index.html")
 
-@app.route('/predict',methods=["post"])
+@app.route('/',methods=["post"])
 def predict():
-    formvalues = request.form
+    formvalues = request.json
+    print(formvalues)
     path1 = "/static/json/"
     with open(os.path.join(os.getcwd()+"/"+path1,'file.json'), 'w') as f:
         json.dump(formvalues, f)
     with open(os.path.join(os.getcwd()+"/"+path1,'file.json'), 'r') as f:
         values = json.load(f)
     df = pd.DataFrame(json_normalize(values))
-    model_path=os.getcwd()+"/static/model/diabetes.pkl"
+    model_path=os.getcwd()+"/ds.pkl"
     model = joblib.load(model_path)
     result = model.predict(df)
     a=np.array(1)
@@ -30,7 +31,7 @@ def predict():
     else:
         msg = "Unsuccess"
     positive_percent= model.predict_proba(df)[0][1]*100
-    return render_template("index.html",msg=msg,prob=positive_percent,**request.args)
+    return 'hello'
 
 
 
