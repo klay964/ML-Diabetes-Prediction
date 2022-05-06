@@ -48,9 +48,9 @@ def main():
         prediction = ""
 
     print('dd',prediction)   
-    if prediction==0:
+    if prediction==1:
         return 'has diabetes'
-    elif prediction==1:
+    elif prediction==0:
         return'dont have diabetes'
 
     else :
