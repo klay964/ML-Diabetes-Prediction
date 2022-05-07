@@ -38,7 +38,7 @@ y = df1['CLASS']
 y.replace({'Y': 1, 'N': 0, "P": 2, 'N ': 0, 'Y ': 1}, inplace=True)
 y = y.astype('int')
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.20, random_state=0)
+    X, y, test_size=0.33, random_state=0)
 
 # Creating DS Model
 
